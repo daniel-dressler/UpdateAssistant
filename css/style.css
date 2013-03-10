@@ -55,16 +55,16 @@ border-left: 1px solid #eee;
 opacity: 1;
 }
 
-.topbar {
+.navbar {
 height: auto;
 border-bottom: 5px solid rgba(0, 10, 0, 0.1);
 }
 
-.topbar h3 a, .topbar .brand, .topbar div > ul a, .nav a {
+.navbar h3 a, .navbar .brand, .navbar div > ul a, .nav a {
 padding-bottom: 8px;
 }
 
-.topbar .btn {
+.navbar .btn {
 border: 0;
 }
 
