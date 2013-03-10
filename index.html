@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>UpdateAssistant</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="./bootstrap.min.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="js/jquery/jquery.tablesorter.min.js"></script>
+    <script src="js/bootstrap/bootstrap-modal.js"></script>
+    <script src="js/deleteButton.js"></script>
+    <script src="js/manageSites.js"></script>
+    <script src="js/updateUrls.js"></script>
+    <script src="js/stableWpVersion.js"></script>
+    <script src="js/update-list.js"></script>
+    <script src="js/checkVersions.js"></script>
+    <script type="text/javascript">
+    /* WARNING:
+       If you are self hosting feel free to delete this tracking.
+       If you do not delete it then I will get statistics on
+       UpdateAssistant's popularity, which would be cool. */
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-28872975-1']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+    </script>
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">UpdateAssistant</a>
+          <ul class="nav">
+			<li><a href="#about">About</a></li>
+			<li><a href="#wordpress">Wordpress Installs</a></li>
+			<li><a href="#settings">Settings &amp; Tools</a></li>
+			<li><a href="#help">Help</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+		<section id="about">
+			<div class="page-header">
+			  <h2>About</h2>
+			</div>
+			<div class="row">
+			  <div class="span14" style="color:#6B6B6B">
+					<p>Keeping Wordpress updated is essential. 
+					Letting Wordpress become outdated is a sure-fire way to get your websited hacked. 
+					Updating Wordpress itself is an easy process but can become troublesome for webmasters with many websites.</p>
+					
+					<p>UpdateAssistent makes it effortless to keep your Wordpress installs up to date. 
+					Once your websites have been added to UpdateAssitent checking that they are all updated is as simple as visiting this page. 
+					Since we link directly to the Wordpress Update Panel updating itself is even easier with UpdateAssistent.</p>
+			  </div>
+			</div>
+        </section>
+        
+		<section id="wordpress" class="cmsCategory">
+			<div class="page-header">
+			  <h1>Wordpress Installs <small>Latest stable version is 「<b class="stableVersion"></b>」 </small></h1>
+			</div>
+			<div class="row">
+			  <div class="span14">
+					<table id="site-list" class="zebra-striped">
+						<thead><tr>
+							<th>URL</th>
+							<th>Updated?</th>
+							<th>Version</th>
+							<th style="width:1em;"></th>
+						</tr></thead>
+						
+						<tbody>
+						<!-- Site listing goes here -->
+						</tbody>
+					</table>
+			  </div>
+			</div>
+        </section>
+        
+        
+        <section id="settings">
+			<div class="page-header">
+				<h1>
+					Settings &amp; Tools
+					<small>Add domains</small>
+				</h1>
+			</div>
+			<div class="row">
+				<div class="span7">
+					<form>
+						<fieldset>
+							<legend>Add Websites</legend>
+							<div class="clearfix">
+								<label>	
+									<span class="help-block" style="margin-bottom:10px;"> Add new websites one to a line. 
+									If wordpress is installed to a sub-directory then include the directory in the url. 
+									Example: danieru.com </span>
+									<input id="rawSiteButton" class="btn primary" type="submit" value="Add new sites">			
+								</label>
+								<div class="input">
+									<textarea id="rawSiteInput" style="width:100%" rows="10" ></textarea>
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				<div class="span7">
+					<form>
+						<fieldset>
+							<legend>Sharable Link</legend>
+							<div class="clearfix">
+								<label>	
+									<span class="help-block" style="margin-bottom:10px;"> Links directly to the current list.</span>		
+								</label>
+								<div class="input">
+									<!-- sharable link modal -->
+									<div id="linkModal" class="modal hide fade">
+										<div class="modal-header">
+											<a href="#" class="close">&times;</a>
+											<h3>Sharable link</h3>
+										</div>
+										<div class="modal-body">
+											<span class="help-block"> Bellow is a direct and sharable link for the current website list. Future deletions or additions will not be reflected by the link. </span>
+											<pre><a id="exportedUrl" href=""></a></pre>
+										</div>
+										<div class="modal-footer">
+											<a id="btnPrimary" href="#" class="btn close">Close</a>
+										</div>
+									</div>
+									<input id="linkBtn" class="btn open" type="submit" value="Get Url" >
+								</div>
+							</div>
+						</fieldset>
+						<fieldset>
+							<legend>Export list to JSON</legend>
+							<div class="clearfix">
+								<label>	
+									<span class="help-block" style="margin-bottom:10px;"> Inspect how the state is stored.</span>		
+								</label>
+								<div class="input">
+									<!-- export to json modal -->
+									<div id="exportModal" class="modal hide fade">
+										<div class="modal-header">
+											<a href="#" class="close">&times;</a>
+											<h3>Exported Sites</h3>
+										</div>
+										<div class="modal-body">
+											<pre id="exportedSiteJson" class="prettyprint"></pre>
+											<span class="help-block"> Copy this text into your clipboard </span>
+										</div>
+										<div class="modal-footer">
+											<a id="btnPrimary" href="#" class="btn close">Close</a>
+										</div>
+									</div>
+									<input id="exportBtn" class="btn open" type="submit" value="Export Site List" >
+								</div>
+							</div>
+						</fieldset>
+						<fieldset>
+							<legend>Import list from JSON</legend>
+							<div class="clearfix">
+								<label>	
+									<span class="help-block" style="margin-bottom:10px;"> Feel free to play around.</span>		
+								</label>
+								<div class="input">
+									<!-- import from json modal -->
+									<div id="importModal" class="modal hide fade">
+										<div class="modal-header">
+											<a href="#" class="close">&times;</a>
+											<h3>Import Sites</h3>
+										</div>
+										<div class="modal-body">
+											<textarea id="importJsonInput" class="xxlarge" rows="5" name="importJsonInput"></textarea>
+											<span class="help-block"> Enter the json above </span>
+										</div>
+										<div class="modal-footer">
+											<a id="btnPrimary" href="#" class="btn close">Cancel</a>
+											<a id="importBtnFinal" href="#" class="btn close primary">Import</a>
+										</div>
+									</div>
+									<input id="importBtn" class="btn open" type="submit" value="Import Site List" >
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</section>
+		
+		<section id="help">
+			<div class="page-header">
+				<h1>
+					Help
+					<small>instructions &amp; FAQ</small>
+				</h1>
+			</div>
+			<div class="row">
+				<div class="span14">
+					<table class="bordered-table zebra-striped">
+						<thead><tr>
+							<th style="width: 190px;">Issue</th>
+							<th>Information</th>
+						</tr></thead>
+						
+						<tbody>
+							<tr>
+								<td>What does a 「?」 version mean?</td>
+								<td>A 「?」 in the version column in general means a failure to detect the wordpress version. 
+								This can be caused by there simply not being a wordpress installation at the url. 
+								Or that the wordpress isntall is not reporting its version with the standard meta tag. 
+								Some admins turn off the version reporting for "security" and some themes alter the tag.</td>
+							</tr>
+							
+							<tr>
+								<td>Why might a website be 「MAYBE」 updated?</td>
+								<td>A 「MAYBE」 updated status is caused either by an unknown version or a bug. 
+								If the version is properly reported yet the 「Updated?」 status is 「MAYBE」 please report this as a bug.</td>
+							</tr>
+							
+							<tr>
+								<td>Does the WordPress version meta tag pose a security risk?</td>
+								<td>I am perhaps the most paraoinoid person I know when it some to security. With that said I do not suggest disabling the version meta tag.
+								<br><br> Botnets and crackers will attack your wordpress with automated scripts regardless of what version it is. 
+								Removing the version tag does not change anything. 
+								If your wordpress is outdated you <strong>will</strong> get hacked.
+								<br><br>
+								So no, the version meta tag does <strong>not</strong> pose a security risk.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+      
+      </div>
+
+      <footer>
+        <p>&copy; Daniel Dressler 2012</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>

@@ -1,0 +1,29 @@
+html, body, .container, .content {
+background: white;
+}
+
+html{
+height: 100%;
+overflow-x: hidden;
+overflow-y: auto;
+}
+
+.container, .span14 {
+width: 100%;
+}
+
+.row, .row > [class*="span"] {
+margin-left: 0;
+}
+
+.page-header {
+padding-left: 10px;
+}
+
+.container > .content {
+background-color: #FFFFFF;
+border-radius: 0;
+box-shadow: 0 0px 0px white;
+margin: 0;
+padding: 0;
+}
