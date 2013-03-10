@@ -17,7 +17,7 @@
 		
 		versionLabel.map(function () {
 			
-			$.get('../backend/getStableWpVersion.php?', function(data) {
+			$.get('../proxy/getStableWpVersion.php?', function(data) {
 				versionLabel.text(data.toString());
 				console.log('Latest stable wp version is 「' + data.toString() + '」');
 				$('#wordpress').checkVersions()

@@ -23,7 +23,7 @@
 			//not check this
 			versionLabel.attr('data-version', '?');
 						
-			$.get('../backend/getSiteVersion.php?url=' + url, function(data) {
+			$.get('../proxy/getSiteVersion.php?url=' + url, function(data) {
 				var siteVersion = data.toString();
 				
 				if(siteVersion && !/WordPress.com/.test(siteVersion)) {
